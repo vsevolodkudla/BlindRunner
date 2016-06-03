@@ -2,6 +2,9 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "menu.h"
+#include <QKeyEvent>
+#include <QThread>
 
 namespace Ui {
 class MainWindow;
@@ -17,6 +20,14 @@ public:
 
 private:
     Ui::MainWindow *ui;
+
+    Menu _menu;
+    QThread _thread;
+
+    void keyPressEvent(QKeyEvent *event);
+
+signals:
+    void setKey(int);
 };
 
 #endif // MAINWINDOW_H

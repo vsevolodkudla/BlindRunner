@@ -6,9 +6,17 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    _menu.BeginGame();
+    _menu.SetThread(_thread);
+    connect(this, SIGNAL(setKey(int)), &_menu, SLOT(setKey(int)));
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::keyPressEvent(QKeyEvent *event)
+{
+    emit setKey(event->key());
 }
