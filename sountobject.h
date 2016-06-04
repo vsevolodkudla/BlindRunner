@@ -8,6 +8,8 @@
 #include <OpenAL/al.h>
 #include <OpenAL/alc.h>
 
+#include <QDebug>
+
 class SountObject
 {
     char  _type[4];
@@ -18,19 +20,13 @@ class SountObject
     DWORD _dataSize;
     unsigned char* _buf;
 
-    ALfloat _SourcePos[3];
-    ALfloat _SourceVel[3];
-
     int _speed;
     FILE * _file;
-
-    ALCdevice *_device;
-    ALCcontext *_context;
 
     ALuint _source;
     ALuint _buffer;
     ALuint _frequency;
-    ALenum _format=0;
+    ALenum _format;
 
 public:
     SountObject();
@@ -41,6 +37,9 @@ public:
     bool LoadMusic(char *filename);
     void SetSpeed(int speed);
     void Update(float time);
+
+    ALfloat _SourcePos[3];
+    ALfloat _SourceVel[3];
 };
 
 #endif // SOUNTOBJECT_H

@@ -1,11 +1,26 @@
 #include "player.h"
 
-Player::Player(float x, float y, float z)
+Player::Player(float x, float y, float z) :
+    format(0),
+    _turn(0),
+    _stay(0)
 {
-    ListenerPos[0] = x;
-    ListenerPos[1] = y;
-    ListenerPos[2] = z;
+    _ListenerPos[0] = x;
+    _ListenerPos[1] = y;
+    _ListenerPos[2] = z;
+
+    _ListenerOri[0] = 0;
+    _ListenerOri[1] = 0;
+    _ListenerOri[2] = -1;
+    _ListenerOri[3] = 0;
+    _ListenerOri[4] = 1;
+    _ListenerOri[5] = 0;
+
+    _ListenerVel[0] = 0;
+    _ListenerVel[1] = 0;
+    _ListenerVel[2] = 0;
 }
+
 
 void Player::Up()
 {
@@ -28,12 +43,15 @@ void Player::Right()
 
 void Player::Update(float time)
 {
-    ListenerPos[2] += time * _speed;
-    ListenerPos[0] += _turn * _stay;
+    _ListenerPos[2] += time * _speed;
+    _ListenerPos[0] += _turn * _stay;
     _turn = 0;
 
-    alListenerfv(AL_POSITION,    ListenerPos);
-    alListenerfv(AL_VELOCITY,    ListenerVel);
-    alListenerfv(AL_ORIENTATION, ListenerOri);
+    qDebug() << "Player: " << _ListenerPos[0] << " " << _ListenerPos[1] << " " << _ListenerPos[2] << endl;
 
+    alListenerfv(AL_POSITION,    _ListenerPos);
+}
+void Player::SetSpeed(int speed)
+{
+    _speed = speed;
 }

@@ -1,6 +1,7 @@
 #include "sountobject.h"
 
-SountObject::SountObject()
+SountObject::SountObject():
+    _format(0)
 {
 
 }
@@ -9,6 +10,7 @@ void SountObject::Play()
 {
     alGenBuffers(1, &_buffer);
     alGenSources(1, &_source);
+
     if(alGetError() != AL_NO_ERROR)
         return;
 
@@ -41,6 +43,12 @@ void SountObject::Play()
     alSourcei (_source, AL_LOOPING,  AL_FALSE );
 
     alSourcePlay(_source);
+}
+
+
+void SountObject::Stop()
+{
+    alSourceStop(_source);
 }
 
 void SountObject::SetPos(ALfloat x, ALfloat y, ALfloat z)
@@ -89,8 +97,11 @@ bool SountObject::LoadMusic(char *filename)
 
     fread(&_dataSize,sizeof(DWORD),1,_file);
 
-    fread(_buf,sizeof(BYTE),_dataSize,_file);
-    _frequency=_sampleRate;
+    _buf = new unsigned char[_dataSize];
+
+    qDebug() << fread(_buf,sizeof(BYTE),_dataSize,_file) << endl;
+    _frequency = _sampleRate;
+    return true;
 }
 
 void SountObject::SetSpeed(int speed)
@@ -102,4 +113,8 @@ void SountObject::Update(float time)
 {
     _SourcePos[2] += time *_speed;
 
+    alSourcefv(_source, AL_POSITION, _SourcePos);
+    alSourcefv(_source, AL_VELOCITY, _SourceVel);
+
+    qDebug() << "Zombi: " << _SourcePos[0] << " " << _SourcePos[1] << " " << _SourcePos[2] << endl;
 }

@@ -3,15 +3,13 @@
 
 #include <OpenAL/al.h>
 #include <OpenAL/alc.h>
+#include <QDebug>
 
 
 class Player
 {
     int _speed;
     int _stay;
-    ALfloat ListenerPos[3];
-    ALfloat ListenerVel[3];
-    ALfloat ListenerOri[6];
 
     int _sta;
     int _turn;
@@ -22,10 +20,10 @@ class Player
     ALCdevice *device;
     ALCcontext *context;
 
-    ALuint source;
-    ALuint buffer;
+    ALuint *source;
+    ALuint *buffer;
     ALuint frequency;
-    ALenum format=0;
+    ALenum format;
 
 public:
     Player(float x = 0, float y = 0, float z = 0);
@@ -35,6 +33,9 @@ public:
     void Down();
     void Left();
     void Right();
+    ALfloat _ListenerPos[3];
+    ALfloat _ListenerVel[3];
+    ALfloat _ListenerOri[6];
 
 };
 

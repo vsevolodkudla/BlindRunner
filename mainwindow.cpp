@@ -8,6 +8,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     _menu.BeginGame();
     _menu.SetThread(_thread);
+    _menu.moveToThread(&_thread);
+
+    _thread.start();
+
     connect(this, SIGNAL(setKey(int)), &_menu, SLOT(setKey(int)));
 }
 
