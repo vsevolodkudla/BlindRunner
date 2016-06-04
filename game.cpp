@@ -28,7 +28,7 @@ bool Game::StartGame()
     for(int i = 0; i < 7; i++)
     {
         SountObject * tmp = new SountObject;
-        tmp->LoadMusic("comar.wav");
+        tmp->LoadMusic(QString("Sounds/Zombie (" + QString::number(1+ rand()%7) + ").wav").toLatin1().data());
         tmp->SetSpeed(0);
         tmp->SetPos(-1000,-1000,-1000);
         tmp->Play();

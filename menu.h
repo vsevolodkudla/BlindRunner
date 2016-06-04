@@ -22,17 +22,8 @@ class Menu : public QObject
     ALCdevice * _device;
     ALCcontext * _context;
 
-    char  _type[4];
-    DWORD _size, _chunkSize;
-    short _formatType, _channels;
-    DWORD _sampleRate, _avgBytesPerSec;
-    short _bytesPerSample, _bitsPerSample;
-    DWORD _dataSize;
-
+    ALuint _music;
     ALuint _source;
-    ALuint _buffer;
-    ALuint _frequency;
-    ALenum _format;
 
 public:
 
@@ -41,7 +32,8 @@ public:
     void NewGame();
     void EndGame();
 
-    bool Say(char *);
+    bool Say(char *, float dist);
+    bool Music(char *filename, float dist, ALuint &_source);
     bool isPlaying();
 
     void SetThread(QThread &cThread);

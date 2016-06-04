@@ -37,7 +37,7 @@ void SountObject::Play()
 
     alSourcei (_source, AL_BUFFER,   _buffer);
     alSourcef (_source, AL_PITCH,    1.0f     );
-    alSourcef (_source, AL_GAIN,     100.0f     );
+    alSourcef (_source, AL_GAIN,     5.0f     );
     alSourcefv(_source, AL_POSITION, _SourcePos);
     alSourcefv(_source, AL_VELOCITY, _SourceVel);
     alSourcei (_source, AL_LOOPING,  AL_TRUE );

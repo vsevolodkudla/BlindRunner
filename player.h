@@ -36,9 +36,6 @@ public:
     ALfloat _ListenerPos[3];
     ALfloat _ListenerVel[3];
     ALfloat _ListenerOri[6];
-
-
-
 };
 
 #endif // PLAYER_H
