@@ -37,10 +37,10 @@ void SountObject::Play()
 
     alSourcei (_source, AL_BUFFER,   _buffer);
     alSourcef (_source, AL_PITCH,    1.0f     );
-    alSourcef (_source, AL_GAIN,     1.0f     );
+    alSourcef (_source, AL_GAIN,     100.0f     );
     alSourcefv(_source, AL_POSITION, _SourcePos);
     alSourcefv(_source, AL_VELOCITY, _SourceVel);
-    alSourcei (_source, AL_LOOPING,  AL_FALSE );
+    alSourcei (_source, AL_LOOPING,  AL_TRUE );
 
     alSourcePlay(_source);
 }
@@ -99,9 +99,11 @@ bool SountObject::LoadMusic(char *filename)
 
     _buf = new unsigned char[_dataSize];
 
-    qDebug() << fread(_buf,sizeof(BYTE),_dataSize,_file) << endl;
+    fread(_buf,sizeof(BYTE),_dataSize, _file);
+
     _frequency = _sampleRate;
     return true;
+
 }
 
 void SountObject::SetSpeed(int speed)

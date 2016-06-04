@@ -6,13 +6,14 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    connect(this, SIGNAL(setKey(int)), &_menu, SLOT(SetKey(int)));
     _menu.BeginGame();
     _menu.SetThread(_thread);
     _menu.moveToThread(&_thread);
 
     _thread.start();
 
-    connect(this, SIGNAL(setKey(int)), &_menu, SLOT(setKey(int)));
+
 }
 
 MainWindow::~MainWindow()
@@ -22,5 +23,5 @@ MainWindow::~MainWindow()
 
 void MainWindow::keyPressEvent(QKeyEvent *event)
 {
-    emit setKey(event->key());
+    _menu.SetKey(event->key());
 }

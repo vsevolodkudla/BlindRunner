@@ -26,8 +26,12 @@ public:
     bool StartGame();
     bool PauseGame();
     bool StopGame();
+    bool ResumeGame();
+
+    bool gameover;
 
     void Update(float time);
+public slots:
     void SetKey(int key);
 
 };

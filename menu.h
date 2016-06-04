@@ -13,6 +13,8 @@ class Menu : public QObject
     Game runner;
     QTime _time;
 
+    int _gameStage;
+
     int _keyPress;
 
     unsigned char * _buf;
@@ -27,8 +29,8 @@ class Menu : public QObject
     short _bytesPerSample, _bitsPerSample;
     DWORD _dataSize;
 
-    ALuint * _source;
-    ALuint * _buffer;
+    ALuint _source;
+    ALuint _buffer;
     ALuint _frequency;
     ALenum _format;
 
@@ -39,10 +41,13 @@ public:
     void NewGame();
     void EndGame();
 
+    bool Say(char *);
+    bool isPlaying();
+
     void SetThread(QThread &cThread);
 public slots:
     void Update();
-    void setKey(int key);
+    void SetKey(int);
 
 };
 

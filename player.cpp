@@ -3,7 +3,7 @@
 Player::Player(float x, float y, float z) :
     format(0),
     _turn(0),
-    _stay(0)
+    _stay(5)
 {
     _ListenerPos[0] = x;
     _ListenerPos[1] = y;
@@ -44,7 +44,10 @@ void Player::Right()
 void Player::Update(float time)
 {
     _ListenerPos[2] += time * _speed;
+
     _ListenerPos[0] += _turn * _stay;
+    if(_ListenerPos[0] > 50) _ListenerPos[0] = 50;
+    if(_ListenerPos[0] < -50) _ListenerPos[0] = -50;
     _turn = 0;
 
     qDebug() << "Player: " << _ListenerPos[0] << " " << _ListenerPos[1] << " " << _ListenerPos[2] << endl;
