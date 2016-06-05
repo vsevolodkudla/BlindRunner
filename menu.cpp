@@ -242,7 +242,7 @@ void Menu::SetKey(int key)
         while(isPlaying());
         Music("Sounds/heart.wav",0,_heart);
         NewGame();
-        _timeGrom = 12;
+        _timeGrom = 0;
         _gameStage = 3;
     }
     if(_gameStage == 2 && key == Qt::Key_Left && !isPlaying())
@@ -279,8 +279,6 @@ void Menu::SetKey(int key)
         _gameStage = 5;
         runner.PauseGame();
 
-        alSourceStop(_heart);
-        alSourceStop(_grom);
         Music("Music/MainBackground.wav", 3, _music);
         Say("Voice/Pause.wav", 0);
         while(isPlaying());
@@ -315,12 +313,14 @@ void Menu::Update()
             if(_gameStage == 3)
             {
                 float tmp = (float)_time.restart()/1000;
-                _timeGrom -= tmp;
+                _timeGrom += tmp;
                 qDebug() << "Time Grom: " << _timeGrom << endl;
-                if(_timeGrom < 0)
+                ALenum state;
+
+                alGetSourcei(_grom, AL_SOURCE_STATE, &state);
+                if(_timeGrom > 12 && state != AL_PLAYING)
                 {
                     Music("Sounds/grom.wav", 0,_grom);
-                    _timeGrom = 200000;
                 }
                 runner.Update(tmp);
                 UpdatePos(_grom,runner.getPlayerPos()[0],runner.getPlayerPos()[1],runner.getPlayerPos()[2]);
@@ -331,9 +331,13 @@ void Menu::Update()
         {
             runner.StopGame();
             runner.gameover = false;
+            Music("Music/MainBackground.wav", 7, _music);
             Say("Sounds/hunter.wav", 0);
             while(isPlaying());
-            Music("Music/Zombies eating.wav", 1, _music);
+
+            alSourceStop(_heart);
+            alSourceStop(_grom);
+
             Say("Voice/GameOver.wav", 0);
             while (isPlaying());
             Say("Voice/NewGame.wav", 0);

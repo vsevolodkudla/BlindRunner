@@ -40,14 +40,26 @@ void SountObject::Play()
     alBufferData(_buffer, _format, _buf, _dataSize, _frequency);
     if(alGetError() != AL_NO_ERROR)
         return;
+/*
+    alDistanceModel(AL_INVERSE_DISTANCE);
+    alSourcef(_source, AL_REFERENCE_DISTANCE, 5.0f);
+    alSourcef(_source, AL_ROLLOFF_FACTOR, 1.0f);
+*/
+
+    alDistanceModel(AL_LINEAR_DISTANCE);
+    alSourcef(_source, AL_REFERENCE_DISTANCE, 3.0f);
+    alSourcef(_source, AL_MAX_DISTANCE, 7.0f);
+    alSourcef(_source, AL_ROLLOFF_FACTOR, 1.0f);
 
     alSourcei (_source, AL_BUFFER,   _buffer);
-    alSourcef (_source, AL_PITCH,    1.0f     );
-    alSourcef (_source, AL_GAIN,     1.0f     );
+    //alSourcef (_source, AL_PITCH,    1.0f     );
+    //alSourcef (_source, AL_GAIN,     5.0f     );
     alSourcefv(_source, AL_POSITION, _SourcePos);
     alSourcefv(_source, AL_VELOCITY, _SourceVel);
     alSourcei (_source, AL_LOOPING,  AL_TRUE );
-    alSourcef(_source, AL_LINEAR_DISTANCE, 1.0);
+    //alSourcef(_source, AL_LINEAR_DISTANCE, 1.0);
+
+
 
     alSourcePlay(_source);
 }

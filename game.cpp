@@ -30,7 +30,7 @@ bool Game::StartGame()
         SountObject * tmp = new SountObject;
         tmp->LoadMusic(QString("Sounds/Zombie (" + QString::number(1+ rand()%7) + ").wav").toLatin1().data());
         tmp->SetSpeed(0);
-        tmp->SetPos(5*(rand()%3) - 5, 0, 5*(i+1));
+        tmp->SetPos(2*(rand()%3) - 2, 0, 5*(i+1));
         tmp->Play();
         _zombi.push_back(tmp);
         Sleep(100);
@@ -88,7 +88,7 @@ void Game::Update(float time)
                 SountObject * tmp = new SountObject;
                 tmp->LoadMusic(QString("Sounds/Zombie (" + QString::number(1+ rand()%7) + ").wav").toLatin1().data());
                 tmp->SetSpeed(0);
-                tmp->SetPos(5*rand()%3 - 5, 0, _lisner._ListenerPos[2] + 30);
+                tmp->SetPos(2*(rand()%3) - 2, 0, _lisner._ListenerPos[2] + 30);
                 tmp->Play();
                 _zombi.push_back(tmp);
                 _zombi.pop_front();
