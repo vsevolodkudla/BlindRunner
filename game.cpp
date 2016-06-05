@@ -25,18 +25,22 @@ bool Game::StartGame()
     _lisner._ListenerPos[1] = 0;
     _lisner._ListenerPos[2] = 0;
 
-    for(int i = 0; i < 7; i++)
+    for(int i = 0; i < 10; i++)
     {
         SountObject * tmp = new SountObject;
         tmp->LoadMusic(QString("Sounds/Zombie (" + QString::number(1+ rand()%7) + ").wav").toLatin1().data());
         tmp->SetSpeed(0);
-        tmp->SetPos(-1000,-1000,-1000);
+        tmp->SetPos(5*(rand()%3) - 5, 0, 5*(i+1));
         tmp->Play();
         _zombi.push_back(tmp);
         Sleep(100);
     }
     _isGameStart = true;
     return true;
+}
+ALfloat* Game::getPlayerPos()
+{
+    return _lisner._ListenerPos;
 }
 
 bool Game::PauseGame()
@@ -61,33 +65,40 @@ bool Game::StopGame()
     foreach (SountObject * tmp, _zombi)
     {
         tmp->Stop();
+        delete tmp;
     }
+    _zombi.clear();
     return true;
 }
 
 void Game::Update(float time)
 {
-    //qDebug() << "game update " << endl;
     int dis;
     if(_isGameStart)
     {
         _lisner.Update(time);
+
+
         foreach (SountObject * tmp, _zombi)
         {
             tmp->Update(time);
 
-            if ((dis = dist(_lisner._ListenerPos,tmp->_SourcePos)) > 20)
+            if(_lisner._ListenerPos[2] - tmp->_SourcePos[2] > 20)
             {
-                tmp->SetPos(_lisner._ListenerPos[0] + step * (5 - rand()%10), 0, _lisner._ListenerPos[2] + 10 + rand()%20);
-                qDebug() << "Dist: " << dis << endl;
+                SountObject * tmp = new SountObject;
+                tmp->LoadMusic(QString("Sounds/Zombie (" + QString::number(1+ rand()%7) + ").wav").toLatin1().data());
+                tmp->SetSpeed(0);
+                tmp->SetPos(5*rand()%3 - 5, 0, _lisner._ListenerPos[2] + 30);
+                tmp->Play();
+                _zombi.push_back(tmp);
+                _zombi.pop_front();
             }
-            else
-                if(dis < 1)
-                {
-                    qDebug() << "Game Ower: " << dis << endl;
-                    _isGameStart = false;
-                    gameover = true;
-                }
+            if ((dis = dist(_lisner._ListenerPos,tmp->_SourcePos)) < 1)
+            {
+                qDebug() << "Game Ower: " << dis << endl;
+                _isGameStart = false;
+                gameover = true;
+            }
         }
     }
 }

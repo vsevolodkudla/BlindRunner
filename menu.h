@@ -10,8 +10,10 @@ class Menu : public QObject
 {
     Q_OBJECT
 
+    float _timeGrom;
+
     Game runner;
-    QTime _time;
+    QTime _time, _gameTime;
 
     int _gameStage;
 
@@ -24,6 +26,9 @@ class Menu : public QObject
 
     ALuint _music;
     ALuint _source;
+    ALuint _grom;
+    ALuint _heart;
+    ALuint _wind;
 
 public:
 
@@ -35,6 +40,7 @@ public:
     bool Say(char *, float dist);
     bool Music(char *filename, float dist, ALuint &_source);
     bool isPlaying();
+    void UpdatePos(ALuint&,ALfloat,ALfloat,ALfloat);
 
     void SetThread(QThread &cThread);
 public slots:

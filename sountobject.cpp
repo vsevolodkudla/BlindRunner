@@ -6,6 +6,12 @@ SountObject::SountObject():
 
 }
 
+SountObject::~SountObject()
+{
+    alDeleteSources(1, &_source);
+    alDeleteBuffers(1, &_buffer);
+}
+
 void SountObject::Play()
 {
     alGenBuffers(1, &_buffer);
@@ -37,10 +43,11 @@ void SountObject::Play()
 
     alSourcei (_source, AL_BUFFER,   _buffer);
     alSourcef (_source, AL_PITCH,    1.0f     );
-    alSourcef (_source, AL_GAIN,     5.0f     );
+    alSourcef (_source, AL_GAIN,     1.0f     );
     alSourcefv(_source, AL_POSITION, _SourcePos);
     alSourcefv(_source, AL_VELOCITY, _SourceVel);
     alSourcei (_source, AL_LOOPING,  AL_TRUE );
+    alSourcef(_source, AL_LINEAR_DISTANCE, 1.0);
 
     alSourcePlay(_source);
 }
@@ -48,7 +55,7 @@ void SountObject::Play()
 
 void SountObject::Stop()
 {
-    alSourceStop(_source);
+    alSourcePause(_source);
 }
 
 void SountObject::SetPos(ALfloat x, ALfloat y, ALfloat z)
@@ -116,7 +123,6 @@ void SountObject::Update(float time)
     _SourcePos[2] += time *_speed;
 
     alSourcefv(_source, AL_POSITION, _SourcePos);
-    alSourcefv(_source, AL_VELOCITY, _SourceVel);
 
     qDebug() << "Zombi: " << _SourcePos[0] << " " << _SourcePos[1] << " " << _SourcePos[2] << endl;
 }

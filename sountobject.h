@@ -30,6 +30,7 @@ class SountObject
 
 public:
     SountObject();
+    ~SountObject();
     void Play();
     void Stop();
     void SetPos(ALfloat x, ALfloat y, ALfloat z);

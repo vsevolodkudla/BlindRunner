@@ -23,6 +23,8 @@ class Game
 public:
     Game();
 
+    ALfloat* getPlayerPos();
+
     bool StartGame();
     bool PauseGame();
     bool StopGame();
